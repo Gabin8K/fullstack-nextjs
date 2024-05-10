@@ -4,8 +4,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 model user {
@@ -13,8 +13,9 @@ model user {
   email   String   @unique
   name    String?
   role    role     @default(USER)
-  posts   post[]
+  image   String?
   answers answer[]
+  posts   post[]
 }
 
 model post {
@@ -26,8 +27,8 @@ model post {
   text       String?
   image_url  String?
   authorId   String
-  author     user     @relation(fields: [authorId], references: [id])
   answers    answer[]
+  author     user     @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
 model answer {
@@ -36,12 +37,12 @@ model answer {
   createdAt DateTime @default(now())
   updateAt  DateTime @updatedAt
   answerId  String?
-  answer    answer?  @relation("PostAnswer", fields: [answerId], references: [id])
-  answers   answer[] @relation("PostAnswer")
   userId    String
-  user      user     @relation(fields: [userId], references: [id])
   postId    String
-  post      post     @relation(fields: [postId], references: [id])
+  answer    answer?  @relation("PostAnswer", fields: [answerId], references: [id], onDelete: Cascade)
+  answers   answer[] @relation("PostAnswer")
+  post      post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum role {

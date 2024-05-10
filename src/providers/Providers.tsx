@@ -1,12 +1,21 @@
+'use client'
 import React, { FunctionComponent, PropsWithChildren } from 'react'
 import { ThemeProvider } from './ThemeProvider'
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 
 
-const Providers: FunctionComponent<PropsWithChildren> = ({ children }) => {
+type Props = PropsWithChildren<{
+  session: Session | null
+}>;
+
+const Providers: FunctionComponent<Props> = ({ children, session }) => {
   return (
-    <ThemeProvider defaultTheme={'system'}>
-      {children}
-    </ThemeProvider>
+    <SessionProvider session={session}>
+      <ThemeProvider defaultTheme={'system'}>
+        {children}
+      </ThemeProvider>
+    </SessionProvider>
   )
 }
 
