@@ -16,6 +16,7 @@
     "@vercel/postgres": "^0.8.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cookies-next": "^4.1.1",
     "framer-motion": "^11.1.9",
     "next": "14.2.3",
     "next-auth": "^4.24.7",
