@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model user {
+  id      String   @id @default(cuid())
+  email   String   @unique
+  name    String?
+  role    role     @default(USER)
+  posts   post[]
+  answers answer[]
+}
+
+model post {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updateAt   DateTime @updatedAt
+  title      String
+  pushlished Boolean  @default(false)
+  text       String?
+  image_url  String?
+  authorId   String
+  author     user     @relation(fields: [authorId], references: [id])
+  answers    answer[]
+}
+
+model answer {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+  answerId  String?
+  answer    answer?  @relation("PostAnswer", fields: [answerId], references: [id])
+  answers   answer[] @relation("PostAnswer")
+  userId    String
+  user      user     @relation(fields: [userId], references: [id])
+  postId    String
+  post      post     @relation(fields: [postId], references: [id])
+}
+
+enum role {
+  USER
+  ADMIN
+}
