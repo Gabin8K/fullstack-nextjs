@@ -15,7 +15,7 @@ export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
       await signOut();
     } catch (error) {
       toast({
-        title: 'An error occurred',
+        title: 'An error occurred'
       })
     }
   }
