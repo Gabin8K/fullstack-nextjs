@@ -4,11 +4,13 @@ import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMe
 import { signOut, useSession } from 'next-auth/react'
 import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu'
 import Image from 'next/image'
+import { useTheme } from '@/hooks'
 
 
 export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
   const session = useSession()
   const { toast } = useToast()
+  const { theme, setTheme } = useTheme()
 
   const onLogout = async () => {
     try {
@@ -20,6 +22,10 @@ export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
     }
   }
 
+  const onChangeTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
+
   return (
     <>
       <header className={'fixed z-[1] h-[80px] w-full bg-white dark:bg-black shadow-md dark:shadow-slate-900'}>
@@ -28,17 +34,17 @@ export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
             <h1 className={'font-extrabold text-xl text-slate-800 dark:text-slate-300'}>Discu&apos;s</h1>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Button
-                  variant={'ghost'}
+                <div
+                  className={'flex items-center rounded-md gap-x-2 transition-all hover:bg-slate-100 hover:dark:bg-slate-500 px-2 py-1'}
                 >
                   <Image
                     fill
                     alt={'avatar'}
                     src={session.data?.user?.image || '/avatar.png'}
-                    className={'!relative !w-6 !h-6 mr-1 border-2 border-slate-400 dark:border-slate-100 rounded-full'}
+                    className={'!relative !w-6 !h-6 border-2 border-slate-400 dark:border-slate-100 rounded-full'}
                   />
                   Me
-                </Button>
+                </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuSeparator />
@@ -50,6 +56,11 @@ export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   My Likes
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={onChangeTheme}
+                >
+                  {theme === 'dark' ? '🌙' : '☀️'}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

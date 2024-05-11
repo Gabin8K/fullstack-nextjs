@@ -49,3 +49,18 @@ enum role {
   USER
   ADMIN
 }
+
+// Launch the Prisma Studio : npx prisma studio
+// Pull the latest changes from the database: npx prisma db pull
+// Push the changes to the database: npx prisma db push
+// Generate Prisma Client: npx prisma generate
+
+// Step 1: Create a migration
+
+// model user {
+//  phone_number String? @unique
+// }
+
+// Step 2: Apply the migration
+// npx prisma migrate dev --name add_phone_number_to_user
+// npx prisma migrate deploy

@@ -21,7 +21,7 @@ const Providers: FunctionComponent<Props> = ({ children, session }) => {
       <body className={inter.className}>
         <SessionProvider session={session}>
           <NextAuthProvider>
-            <ThemeProvider defaultTheme={'system'}>
+            <ThemeProvider defaultTheme={'dark'}>
               {children}
               <Toaster />
             </ThemeProvider>
