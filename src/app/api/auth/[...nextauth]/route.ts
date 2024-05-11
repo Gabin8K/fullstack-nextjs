@@ -19,7 +19,6 @@ const handler = NextAuth({
             data: {
               email: profile?.email!,
               name: profile?.name,
-              // @ts-ignore
               image: profile?.picture
             }
           })
