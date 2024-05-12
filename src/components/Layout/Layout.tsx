@@ -5,6 +5,7 @@ import { signOut, useSession } from 'next-auth/react'
 import { DropdownMenuSeparator } from '@radix-ui/react-dropdown-menu'
 import Image from 'next/image'
 import { useTheme } from '@/hooks'
+import Link from 'next/link'
 
 
 export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
@@ -69,11 +70,16 @@ export const Layout: FunctionComponent<PropsWithChildren> = ({ children }) => {
             <p className="">
               {session.data?.user?.name} (<b>{session.data?.user?.email}</b>)
             </p>
-            <Button
-              variant={'outline'}
+            <Link
+              passHref
+              href={'/new-post'}
             >
-              New Post
-            </Button>
+              <Button
+                variant={'outline'}
+              >
+                New Post
+              </Button>
+            </Link>
             <Button
               variant={'outline'}
               onClick={onLogout}
